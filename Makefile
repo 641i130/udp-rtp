@@ -5,7 +5,7 @@ CFLAGS=-c -Wall
 # Linker flags to use
 LDFLAGS=
 # Name of the executable
-EXECUTABLE=rajio
+EXECUTABLE=rajio.elf
 # Directories for header files and source files
 INCLUDEDIR=include
 SRCDIR=src
