@@ -1,7 +1,8 @@
+#include <arpa/inet.h>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
-
-void printHelp() {}
+#include <unistd.h>
 
 int main(int argc, char **argv) {
   // Start the program!
@@ -43,7 +44,25 @@ int main(int argc, char **argv) {
   std::cout << "The multicast-address is set to: ";
   std::cout << addr << ":" << port;
 
-  // Create the multicast port server!!!
-  //
-  //
+  // Create the multicast server!!!
+
+  // First, create the UDP socket
+  int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0) {
+    std::cerr << "Error creating socket! Socket error '" << sockfd << "'"
+              << std::endl;
+    std::exit(1);
+  }
+
+  // Allow the multiple sockets to use the same address
+  // From my understanding this means multiple users can connect
+  int reuseaddr = 1;
+  if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &reuseaddr,
+                 sizeof(reuseaddr)) < 0) {
+    std::cerr << "Error setting socket options! Socket error '" << reuseaddr
+              << "'" << std::endl;
+    std::exit(1);
+  }
+
+  // Bind the socket to the multicast address and port!
 }
